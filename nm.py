@@ -6,10 +6,12 @@ Andrew Henning-Kolberg
 """
 
 import datetime
+from gross_net_calculator import gross_net_calculator as gnc
 
 def per_week(goal, have):
     """ Given a Goal of 'goal' units and a current 'have' amount,
     return the average weekly production needed to meet that goal by the
     end of the year.
     """
-    return (goal - have) / (52 - datetime.datetime.isocalendar(datetime.datetime.now())[1])
+    return (goal - have) / (52 - datetime.datetime.isocalendar(
+        datetime.datetime.now())[1])
