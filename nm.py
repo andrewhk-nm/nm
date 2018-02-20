@@ -19,6 +19,28 @@ def per_week(goal, have):
     """
     #TODO: 53 week years
     #TODO: what value is returned during a partial week?
+    # See per_week_mark2()
+    
+    return (goal - have) / (52 - datetime.datetime.isocalendar(
+        datetime.datetime.now())[1])
+
+def per_week_mark2(goal, have):
+    """
+    Not yet functional. This version will adjust with 53 week years.
+
+    Given a Goal of 'goal' units and a current 'have' amount,
+    return the average weekly production needed to meet that goal by the
+    end of the year.
+
+    Breaks if there are 53 weeks in the year.
+    What happens during partial weeks?
+    """
+    #TODO: 53 week years
+    #TODO: what value is returned during a partial week?
+    current_year = datetime.datetime.now().year
+
+    if datetime.datetime.isocalendar(datetime.datetime(2018, 12, 31))[0] 
+    
     return (goal - have) / (52 - datetime.datetime.isocalendar(
         datetime.datetime.now())[1])
 
