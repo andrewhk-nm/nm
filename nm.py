@@ -24,6 +24,14 @@ def per_week(goal, have):
     return (goal - have) / (52 - datetime.datetime.isocalendar(
         datetime.datetime.now())[1])
 
+def weeks_in_year(year):
+    """ Given a year, returns the number of weeks per the iso calendar.
+    Will always return 52 or 53
+    """
+    #TDD
+
+    return max([datetime.datetime.isocalendar(datetime.datetime(year, 12, x))[1] for x in range(31 - 7, 32)])
+
 def per_week_mark2(goal, have):
     """
     Not yet functional. This version will adjust with 53 week years.
@@ -35,11 +43,14 @@ def per_week_mark2(goal, have):
     Breaks if there are 53 weeks in the year.
     What happens during partial weeks?
     """
+    pass
     #TODO: 53 week years
     #TODO: what value is returned during a partial week?
     current_year = datetime.datetime.now().year
-
-    if datetime.datetime.isocalendar(datetime.datetime(2018, 12, 31))[0] 
+    # creates a list of the iso week number for the last 7 days
+    # in December of the current year. Taxes the max of that and
+    # that is how many weeks the current year has (52 or 53)
+    weeks_in_current_year = weeks_in_year(current_year)
     
     return (goal - have) / (52 - datetime.datetime.isocalendar(
         datetime.datetime.now())[1])
@@ -74,3 +85,25 @@ def ci_pert(P, r, t):
     return A, the amount
     """
     return P * math.e ** (r * t)
+
+def objectives():
+    """ Given number values, spit out the objectives in order.
+    """
+    # 2018-02-21 Doesn't really work at all.
+
+    objectives = ["Funding your children's education.",
+                  "Funding a comfortable retirement.",
+                  "Providing for your family in the event of death.",
+                  "Providing for you and your family in the event of a disability.",
+                  "Providing for long-term care needs.",
+                  "Properly addressing your estate settlement needs.",
+                  "Evaluating your investment portfolio.",
+                  ]
+
+    order = list()
+    for obj in objectives:
+        r = int(input('{}: '.format(obj)))
+        order.append((r, obj))
+        list.sort(
+    print(order)
+    return order
