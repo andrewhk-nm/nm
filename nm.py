@@ -8,6 +8,7 @@ Andrew Henning-Kolberg
 import datetime
 import math
 from gross_net_calculator import gross_net_calculator as gnc
+from operator import itemgetter
 
 def per_week(goal, have):
     """ Given a Goal of 'goal' units and a current 'have' amount,
@@ -86,11 +87,13 @@ def ci_pert(P, r, t):
     """
     return P * math.e ** (r * t)
 
-def objectives():
+def objectives(autosave_to_clipboard=False):
     """ Given number values, spit out the objectives in order.
     """
     # 2018-02-21 Doesn't really work at all.
-
+    # 2018-02-22 Sorting isn't working at all, I must be doing something wrong
+    # 2018-02-22 Sorting is working!
+    # TODO: put it on the clipboard automatically
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
@@ -104,6 +107,8 @@ def objectives():
     for obj in objectives:
         r = int(input('{}: '.format(obj)))
         order.append((r, obj))
-        list.sort(
-    print(order)
+    order = sorted(order, key=itemgetter(0), reverse=True)
+
+    # print the results for easy copy/paste
+    
     return order
