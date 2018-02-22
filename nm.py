@@ -87,13 +87,24 @@ def ci_pert(P, r, t):
     """
     return P * math.e ** (r * t)
 
-def objectives(autosave_to_clipboard=False):
+def objectives(autosave_to_clipboard=False, retirement_age=None, min_rating=0, budget=None):
     """ Given number values, spit out the objectives in order.
+
+    TODO: params.
+        autosave_to_clipboard=False,
+            This will copy the results to the clipboard
+        retirement_age=None,
+            This will add the "retire by age __. text"
+        min_rating=0
+            This will not print anything below (or should it be at or below?) min_rating
+        budget=None
+            This will do the "Allocate ___ per month toward attaining these objectives." statement
     """
     # 2018-02-21 Doesn't really work at all.
     # 2018-02-22 Sorting isn't working at all, I must be doing something wrong
     # 2018-02-22 Sorting is working!
     # TODO: put it on the clipboard automatically
+    # TODO: I think entry should be a space separated string instead.
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
@@ -110,5 +121,8 @@ def objectives(autosave_to_clipboard=False):
     order = sorted(order, key=itemgetter(0), reverse=True)
 
     # print the results for easy copy/paste
-    
+    print('\nVVV Printing in order VVV\n')
+    for _, obj in order:
+        print(obj)
+    print('\n^^^ Printed in order ^^^')
     return order
