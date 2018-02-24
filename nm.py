@@ -127,7 +127,7 @@ def objectives(input_str=None,
             if not None, use this as a list of inputs instead of asking for each
             one. There are 7 objectives by default.
         retirement_age=None,
-            This will add the "retire by age __. text"
+            String. This will add the "retire by age __. text"
         min_rating=0
             This will not print anything below (or should it be at or below?) min_rating
         budget=None
@@ -155,7 +155,10 @@ def objectives(input_str=None,
     if retirement_age:
         objectives[1] = "Funding a comfortable retirement by age {}".format(retirement_age)
 
-    input_list = input_str.split(sep=input_str_sep)
+    if input_str:
+        # if an input string was passed, split it and override
+        # any input_list that may have been passed
+        input_list = input_str.split(sep=input_str_sep)
 
     order = list()
     if not input_list:
@@ -169,6 +172,10 @@ def objectives(input_str=None,
         for r, obj in enumerate(objectives):
             order.append((input_list[r], obj))
     order = sorted(order, key=itemgetter(0), reverse=True)
+
+    # Add the budget line as the last item if a budget is given
+    if budget:
+        order.append("Allocate ${} per month toward attaining these objectives.".format(budget))
 
     # copy the output to the clipboard, if the option is enabled
     if copy_output_to_clipboard:
@@ -184,13 +191,17 @@ def objectives(input_str=None,
         print(obj)
         rtk.clipboard_append(obj)
         if c < last_element:
-            print('c={} last_element={}'.format(c, last_element))
+            #debug_print('c={} last_element={}'.format(c, last_element))
             rtk.clipboard_append('\n')
             c += 1
             
     print('\n^^^ Printed in order ^^^\n')
 
+    # print clipboard contents
+    #print('printing clipboard={}'.format(rtk.clipboard
+
     if copy_output_to_clipboard:
+        #input('pause to test clipboard')
         rtk.update() # now it stays on the clipboard after the window is closed
         rtk.destroy()
         print('Output copied to clipboard.')
@@ -199,15 +210,92 @@ def objectives(input_str=None,
 
     #return order
 
-if __name__ == '__main__':
-    # Process the args through here
-    
-    print(sys.argv[0:])
-
+def _process_args():
+    """
     # NAME
     #   nm.py
     # SYNTAX
-    #   nm.py [[--objectives] [-o]] <space separated string of ranks>
-    #   nm.py [[-r] [--retirement_age]] <string age>
+    #   nm.py [[--objectives_ranks] [-o]] <'space separated string of ranks'>
+    #   nm.py [[--retirement_age] [-r]] <string age>
     #   nm.py [[--minimum_rank] [-m]] <string minimum printable rank>
-    #   nm.py
+    #   nm.py [[--budget] [-b]] <string monthly_budget>
+    #   nm.py [[--no_clipboard] [-n]]
+    #
+    # Only the objectives() module is currently supported at the commandline
+    """
+    # TODO: Copying to the clipboard doesn't work when I run this from
+    #       the command line
+    # don't pass thru the module name
+    arg_list = sys.argv[1:]
+    # reverse the list so it pops in order
+    arg_list.reverse()
+    # Initialize the variables that will be passed as parameters
+    objectives_ranks = None
+    retirement_age = None
+    minimum_rank = None
+    budget = None
+    use_clipboard = True
+    while arg_list:
+        # cycle through each arg and process as appropriate
+        # remove them from arg_list as you go
+        arg = arg_list.pop()
+        debug_print('popped arg={}'.format(arg))
+        # parser for the objective ranks
+        if arg == '--objectives_ranks' or arg == '-o':
+            # expect a single string of numbers to follow this arg
+            # currently only supports a single space separated string
+            arg = arg_list.pop()
+            objectives_ranks = arg.split()
+            # clear the arg before continuing
+            arg = None
+        elif arg == '--retirement_age' or arg == '-r':
+            # expect a single string representing the age or ages of
+            # retirement
+            # e.g. -r 65
+            #      -r 65/62
+            #       the second option would be for a couple
+            arg = arg_list.pop()
+            retirement_age = arg
+            # clear the arg before continuing
+            arg = None
+        elif arg == '--minimum_rank' or arg == '-m':
+            # expect a single number representing the minimum rank to print
+            arg = arg_list.pop()
+            minimum_rank = int(arg)
+            # clear the arg before continuing
+            arg = None
+        elif arg == '--budget' or arg == '-b':
+            # expect a single number representing the budget available
+            arg = arg_list.pop()
+            budget = arg
+            # clear the arg before continuing
+            arg = None
+        elif arg == '--no_clipboard' or arg == '-n':
+            # no other things expected
+            # if this is passed, don't copy to the clipboard
+            use_clipboard = False
+        elif arg == '--help' or arg == '-h' or arg == 'help' or arg == '?':
+            print(_process_args.__doc__)
+        else:
+            # If it gets here, it's an unrecognized arguement.
+            # print it and quit
+            # TODO: Definite my own exception to say this.
+            raise ValueError('Argument or option not found: {}\npassed argv={}'.format(arg, sys.argv))
+            
+    debug_print('done popping')
+
+    # run the appropriate function with the passed options
+    objectives(input_list=objectives_ranks,
+               retirement_age=retirement_age,
+               min_rating=minimum_rank,
+               budget=budget,
+               copy_output_to_clipboard=use_clipboard,
+               )
+    
+if __name__ == '__main__':
+    # Process the args through here
+    
+    debug_print('passed args={}'.format(sys.argv[0:]))
+
+    _process_args()
+    
