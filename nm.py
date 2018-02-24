@@ -225,6 +225,7 @@ def _process_args():
     """
     # TODO: Copying to the clipboard doesn't work when I run this from
     #       the command line
+    #   Get contents of clipboard: result = r.selection_get(selection = "CLIPBOARD")
     # don't pass thru the module name
     arg_list = sys.argv[1:]
     # reverse the list so it pops in order
