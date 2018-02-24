@@ -10,6 +10,7 @@ import datetime
 import math
 from operator import itemgetter
 from tkinter import Tk
+import sys
 
 # mine
 def debug_print(string):
@@ -105,7 +106,6 @@ def ci_pert(P, r, t):
 def objectives(input_str=None,
                input_str_sep=' ',
                input_list=None,
-               autosave_to_clipboard=False,
                retirement_age=None,
                min_rating=0,
                budget=None,
@@ -113,7 +113,7 @@ def objectives(input_str=None,
                *args,
                ):
     """ Given number values, spit out the objectives in order.
-
+    TODO: Command Line Args
     TODO: params.
         input_str
             use input_str or input_list, not both.
@@ -126,8 +126,6 @@ def objectives(input_str=None,
             use input_str or input_list, not both.
             if not None, use this as a list of inputs instead of asking for each
             one. There are 7 objectives by default.
-        autosave_to_clipboard=False,
-            This will copy the results to the clipboard
         retirement_age=None,
             This will add the "retire by age __. text"
         min_rating=0
@@ -142,8 +140,8 @@ def objectives(input_str=None,
     # 2018-02-21 Doesn't really work at all.
     # 2018-02-22 Sorting isn't working at all, I must be doing something wrong
     # 2018-02-22 Sorting is working!
-    # TODO: put it on the clipboard automatically
-    # TODO: I think entry should be a space separated string instead.
+    # 2018-02-22 put it on the clipboard automatically
+    # 2018-02-22 I think entry should be a space separated string instead.
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
@@ -200,3 +198,16 @@ def objectives(input_str=None,
 
 
     #return order
+
+if __name__ == '__main__':
+    # Process the args through here
+    
+    print(sys.argv[0:])
+
+    # NAME
+    #   nm.py
+    # SYNTAX
+    #   nm.py [[--objectives] [-o]] <space separated string of ranks>
+    #   nm.py [[-r] [--retirement_age]] <string age>
+    #   nm.py [[--minimum_rank] [-m]] <string minimum printable rank>
+    #   nm.py
