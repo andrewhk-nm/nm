@@ -10,6 +10,7 @@ import datetime
 import math
 from operator import itemgetter
 from tkinter import Tk
+# /not mine
 
 # mine
 def debug_print(string):
@@ -24,6 +25,8 @@ try:
 except (NameError, ModuleNotFoundError) as error:
     debug_print('module gross_net_calculator not found. Skipping this module.')
     pass
+import nm_netx_cob
+# /mine
 
 def per_week(goal, have):
     """ Given a Goal of 'goal' units and a current 'have' amount,
