@@ -189,7 +189,8 @@ def objectives(input_str=None,
     c = 1
     for _, obj in order:
         print(obj)
-        rtk.clipboard_append(obj)
+        if copy_output_to_clipboard:
+            rtk.clipboard_append(obj)
         if c < last_element:
             #debug_print('c={} last_element={}'.format(c, last_element))
             rtk.clipboard_append('\n')
@@ -201,7 +202,7 @@ def objectives(input_str=None,
     #print('printing clipboard={}'.format(rtk.clipboard
 
     if copy_output_to_clipboard:
-        #input('pause to test clipboard')
+        debug_print('Printing clipboard contents:\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
         rtk.update() # now it stays on the clipboard after the window is closed
         rtk.destroy()
         print('Output copied to clipboard.')
