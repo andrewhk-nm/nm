@@ -5,25 +5,22 @@ Andrew Henning-Kolberg
 2016-02-14
 """
 
-# not mine
+## not mine
 import datetime
 import math
 from operator import itemgetter
 from tkinter import Tk
-<<<<<<< HEAD
-# /not mine
-=======
 import sys
->>>>>>> 17b5848427ac6215d2a1ae3a9737987683a4d8c8
+## /not mine
 
-# mine
+## mine
 def debug_print(string):
     """ allow for turning debug effects on and off. probably can
     be a class eventually
 
     """
     print(string)
-# try this import and print an error if it failes
+## try this import and print an error if it failes
 try:
     from gross_net_calculator import gross_net_calculator as gnc
 except (NameError, ModuleNotFoundError) as error:
@@ -113,8 +110,10 @@ def objectives(input_str=None,
                input_str_sep=' ',
                input_list=None,
                retirement_age=None,
+               r=None,
                min_rating=0,
                budget=None,
+               b=None,
                copy_output_to_clipboard=True,
                *args,
                ):
@@ -132,12 +131,14 @@ def objectives(input_str=None,
             use input_str or input_list, not both.
             if not None, use this as a list of inputs instead of asking for each
             one. There are 7 objectives by default.
-        retirement_age=None,
+        retirement_age=None, (short name: r=None)
             String. This will add the "retire by age __. text"
+            r overrides retirement_age, if both are passed.
         min_rating=0
             This will not print anything below (or should it be at or below?) min_rating
-        budget=None
+        budget=None, (short name: b=None)
             This will do the "Allocate ___ per month toward attaining these objectives." statement
+            b overrides budget, if both are passed.
         copy_output_to_clipboard=True
             replace the clipboard contents with this output
         *args
@@ -158,6 +159,8 @@ def objectives(input_str=None,
                   ]
     
     # Change/add objectives based on the parameters given
+    if r:
+        retirement_age = r
     if retirement_age:
         objectives[1] = "Funding a comfortable retirement by age {}".format(retirement_age)
 
@@ -180,8 +183,10 @@ def objectives(input_str=None,
     order = sorted(order, key=itemgetter(0), reverse=True)
 
     # Add the budget line as the last item if a budget is given
+    if b:
+        budget = b
     if budget:
-        order.append("Allocate ${} per month toward attaining these objectives.".format(budget))
+        order.append((len(order), "Allocate ${} per month toward attaining these objectives.".format(budget)))
 
     # copy the output to the clipboard, if the option is enabled
     if copy_output_to_clipboard:
@@ -191,7 +196,7 @@ def objectives(input_str=None,
 
     # print the results for easy copy/paste
     print('\nVVV Printing in order VVV\n')
-    last_element = len(objectives)
+    last_element = len(order)
     c = 1
     for _, obj in order:
         print(obj)
@@ -211,7 +216,7 @@ def objectives(input_str=None,
         debug_print('Printing clipboard contents:\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
         rtk.update() # now it stays on the clipboard after the window is closed
         rtk.destroy()
-        print('Output copied to clipboard.')
+        print('\nOutput copied to clipboard.')
 
 
 
