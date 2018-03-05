@@ -3,6 +3,12 @@ The purpose is to collect the NetX360 Client Onboarding (COB)
 Fields that need review. The Excel output is terrible, so this would
 translate it. Probably in a dictionary structure.
 """
+# TODO: read in the list of required field.
+#       look up answers I already know (cache)
+#       ask for the ones I don't, and save the answers to the cache
+#       json sounds right for that.
+
+
 
 some_fields = {
     'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - BUSINESS TYPE IS MANDATORY': '',

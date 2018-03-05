@@ -54,7 +54,7 @@ def weeks_in_year(year):
 
 def per_week_mark2(goal, have):
     """
-    Not yet functional. This version will adjust with 53 week years.
+    This version will adjust with 53 week years.
 
     Given a Goal of 'goal' units and a current 'have' amount,
     return the average weekly production needed to meet that goal by the
@@ -68,11 +68,11 @@ def per_week_mark2(goal, have):
     #TODO: what value is returned during a partial week?
     current_year = datetime.datetime.now().year
     # creates a list of the iso week number for the last 7 days
-    # in December of the current year. Taxes the max of that and
+    # in December of the current year. Takes the max of that and
     # that is how many weeks the current year has (52 or 53)
     weeks_in_current_year = weeks_in_year(current_year)
     
-    return (goal - have) / (52 - datetime.datetime.isocalendar(
+    return (goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
         datetime.datetime.now())[1])
 
 def ci(P, r, n, t):
