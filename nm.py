@@ -29,6 +29,16 @@ except (NameError, ModuleNotFoundError) as error:
 import nm_netx_cob
 # /mine
 
+def ages(*birthyears):
+    """ Takes a list of birthyears and returns their
+        ages.
+    """
+    years = list()
+    for year in birthyears:
+        years.append(datetime.datetime.now().year - year)
+    return years
+    
+
 def per_week(goal, have):
     """ Given a Goal of 'goal' units and a current 'have' amount,
     return the average weekly production needed to meet that goal by the
