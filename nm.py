@@ -30,7 +30,7 @@ import nm_netx_cob
 # /mine
 
 def ages(*birthyears):
-    """ Takes a list of birthyears and returns their
+    """ Takes a comma separated list of birthyears and returns their
         ages.
     """
     years = list()
@@ -98,7 +98,7 @@ def ci(P, r, n, t):
 def ci_list(P, r, n, t):
     """ "A = P(1 + r/n)**(nt)"
     P is principal
-    r is interest rate
+    r is interest rate (enter 8% as 0.08)
     n is number of times interest is compounded per year, as a list
     t is time in years
     return A, the amount
