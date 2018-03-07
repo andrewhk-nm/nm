@@ -39,51 +39,31 @@ def ages(*birthyears):
     return years
     
 
-def per_week(goal, have):
-    """ Given a Goal of 'goal' units and a current 'have' amount,
-    return the average weekly production needed to meet that goal by the
-    end of the year.
-
-    Breaks if there are 53 weeks in the year.
-    What happens during partial weeks?
-    """
-    #TODO: 53 week years
-    #TODO: what value is returned during a partial week?
-    # See per_week_mark2()
-    
-    return (goal - have) / (52 - datetime.datetime.isocalendar(
-        datetime.datetime.now())[1])
-
 def weeks_in_year(year):
     """ Given a year, returns the number of weeks per the iso calendar.
     Will always return 52 or 53
     """
     #TDD
 
-    return max([datetime.datetime.isocalendar(datetime.datetime(year, 12, x))[1] for x in range(31 - 7, 32)])
-
-def per_week_mark2(goal, have):
-    """
-    This version will adjust with 53 week years.
-
-    Given a Goal of 'goal' units and a current 'have' amount,
-    return the average weekly production needed to meet that goal by the
-    end of the year.
-
-    Breaks if there are 53 weeks in the year.
-    What happens during partial weeks?
-    """
-    pass
-    #TODO: 53 week years
-    #TODO: what value is returned during a partial week?
-    current_year = datetime.datetime.now().year
     # creates a list of the iso week number for the last 7 days
     # in December of the current year. Takes the max of that and
     # that is how many weeks the current year has (52 or 53)
+
+    return max([datetime.datetime.isocalendar(datetime.datetime(year, 12, x))[1] for x in range(31 - 7, 32)])
+
+def per_week(goal, have):
+    """
+    Given a Goal of 'goal' units and a current 'have' amount,
+    return the average weekly production needed to meet that goal by the
+    end of the year, rounded to two decimal places.
+    """
+    #DONE: 53 week years
+    #DONE: what value is returned during a partial week?
+    current_year = datetime.datetime.now().year
     weeks_in_current_year = weeks_in_year(current_year)
     
-    return (goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
-        datetime.datetime.now())[1])
+    return round((goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
+        datetime.datetime.now())[1]), 2)
 
 def ci(P, r, n, t):
     """ "A = P(1 + r/n)**(nt)"
@@ -320,5 +300,7 @@ if __name__ == '__main__':
     
     debug_print('passed args={}'.format(sys.argv[0:]))
 
-    _process_args()
+    # Process the arguements, if there are any
+    if len(sys.argv) > 1:
+        _process_args()
     
