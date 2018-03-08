@@ -210,7 +210,7 @@ def objectives(input_str=None,
     #print('printing clipboard={}'.format(rtk.clipboard
 
     if copy_output_to_clipboard:
-        debug_print('**Printing clipboard contents:\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
+        debug_print('**Printing clipboard contents:\n\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
         rtk.update() # now it stays on the clipboard after the window is closed
         rtk.destroy()
         print('\nOutput copied to clipboard.')
