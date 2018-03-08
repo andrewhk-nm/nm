@@ -176,9 +176,7 @@ def objectives(input_str=None,
         # this is a list of the answers. put them together in a tuple
         for r, obj in enumerate(objectives):
             order.append((int(input_list[r]), obj))
-    #print('unsorted={}'.format(order))
     order = sorted(order, key=itemgetter(0), reverse=True)
-    #print('sorted={}'.format(order))
 
     # Add the budget line as the last item if a budget is given
     if b:
@@ -208,18 +206,13 @@ def objectives(input_str=None,
             
     print('\n^^^ Printed in order ^^^\n')
 
-    # print clipboard contents
-    #print('printing clipboard={}'.format(rtk.clipboard
-
     if copy_output_to_clipboard:
-        debug_print('**Printing clipboard contents:\n\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
+##        debug_print('**Printing clipboard contents:\n\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
         rtk.update() # now it stays on the clipboard after the window is closed
         rtk.destroy()
         print('\nOutput copied to clipboard.')
 
-
-    # The output should be returned, too, for testing.
-    # Make sure I always output the same stuff....
+    # Return the ordered list of tuples, showing rating and text.
     return order
 
 def _process_args():
