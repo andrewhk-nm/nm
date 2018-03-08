@@ -175,8 +175,10 @@ def objectives(input_str=None,
     elif input_list:
         # this is a list of the answers. put them together in a tuple
         for r, obj in enumerate(objectives):
-            order.append((input_list[r], obj))
+            order.append((int(input_list[r]), obj))
+    #print('unsorted={}'.format(order))
     order = sorted(order, key=itemgetter(0), reverse=True)
+    #print('sorted={}'.format(order))
 
     # Add the budget line as the last item if a budget is given
     if b:
@@ -195,8 +197,8 @@ def objectives(input_str=None,
     last_element = len(order)
     c = 1
     for rating, obj in order:
-        if int(rating) >= min_rating_to_show:
-            print(obj)
+        if rating >= min_rating_to_show:
+            print(rating, obj)
             if copy_output_to_clipboard:
                 rtk.clipboard_append(obj)
             if c < last_element:
