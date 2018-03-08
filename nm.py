@@ -101,7 +101,8 @@ def objectives(input_str=None,
                input_list=None,
                retirement_age=None,
                r=None,
-               min_rating=0,
+               min_rating_to_show=4,
+               m=None,
                budget=None,
                b=None,
                copy_output_to_clipboard=True,
@@ -124,8 +125,10 @@ def objectives(input_str=None,
         retirement_age=None, (short name: r=None)
             String. This will add the "retire by age __. text"
             r overrides retirement_age, if both are passed.
-        min_rating=0
-            This will not print anything below (or should it be at or below?) min_rating
+        min_rating_to_show=4, (short name: m=None)
+            This will not print anything below (or should it be at or below?)
+            min_rating. a value passed to the short name overrides the
+            long name.
         budget=None, (short name: b=None)
             This will do the "Allocate ___ per month toward attaining these objectives." statement
             b overrides budget, if both are passed.
@@ -153,6 +156,9 @@ def objectives(input_str=None,
         retirement_age = r
     if retirement_age:
         objectives[1] = "Funding a comfortable retirement by age {}".format(retirement_age)
+    # minimum rating
+    if m:
+        min_rating_to_show = m
 
     if input_str:
         # if an input string was passed, split it and override
@@ -188,14 +194,15 @@ def objectives(input_str=None,
     print('\nVVV Printing in order VVV\n')
     last_element = len(order)
     c = 1
-    for _, obj in order:
-        print(obj)
-        if copy_output_to_clipboard:
-            rtk.clipboard_append(obj)
-        if c < last_element:
-            #debug_print('c={} last_element={}'.format(c, last_element))
-            rtk.clipboard_append('\n')
-            c += 1
+    for rating, obj in order:
+        if int(rating) >= min_rating_to_show:
+            print(obj)
+            if copy_output_to_clipboard:
+                rtk.clipboard_append(obj)
+            if c < last_element:
+                #debug_print('c={} last_element={}'.format(c, last_element))
+                rtk.clipboard_append('\n')
+                c += 1
             
     print('\n^^^ Printed in order ^^^\n')
 
@@ -203,7 +210,7 @@ def objectives(input_str=None,
     #print('printing clipboard={}'.format(rtk.clipboard
 
     if copy_output_to_clipboard:
-        debug_print('Printing clipboard contents:\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
+        debug_print('**Printing clipboard contents:\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
         rtk.update() # now it stays on the clipboard after the window is closed
         rtk.destroy()
         print('\nOutput copied to clipboard.')
