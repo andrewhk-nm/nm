@@ -144,6 +144,7 @@ def objectives(input_str=None,
     # 2018-02-22 put it on the clipboard automatically
     # 2018-02-22 I think entry should be a space separated string instead.
     # 2018-03-08 TODO: Custom texts
+    #            TODO: Separate objectives list data into an external file
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
