@@ -155,7 +155,7 @@ def objectives(input_str=None,
     if r:
         retirement_age = r
     if retirement_age:
-        objectives[1] = "Funding a comfortable retirement by age {}".format(retirement_age)
+        objectives[1] = "Funding a comfortable retirement by age {}.".format(retirement_age)
     # minimum rating
     if m:
         min_rating_to_show = m
@@ -191,20 +191,22 @@ def objectives(input_str=None,
         rtk.clipboard_clear()
 
     # print the results for easy copy/paste
-    print('\nVVV Printing in order VVV\n')
+    # I think this is just visual clutter
+##    print('\nVVV Printing in order VVV\n')
     last_element = len(order)
     c = 1
     for rating, obj in order:
         if rating >= min_rating_to_show:
-            print(rating, obj)
+            print(obj)
             if copy_output_to_clipboard:
                 rtk.clipboard_append(obj)
             if c < last_element:
                 #debug_print('c={} last_element={}'.format(c, last_element))
                 rtk.clipboard_append('\n')
                 c += 1
-            
-    print('\n^^^ Printed in order ^^^\n')
+
+    # I think this is just visual clutter       
+##    print('\n^^^ Printed in order ^^^\n')
 
     if copy_output_to_clipboard:
 ##        debug_print('**Printing clipboard contents:\n\n{}'.format(rtk.selection_get(selection="CLIPBOARD")))
