@@ -218,8 +218,9 @@ def objectives(input_str=None,
         print('\nOutput copied to clipboard.')
 
 
-
-    #return order
+    # The output should be returned, too, for testing.
+    # Make sure I always output the same stuff....
+    return order
 
 def _process_args():
     """

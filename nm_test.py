@@ -9,6 +9,15 @@ import unittest
 import nm
 from collections import namedtuple
 
+class Test_nmpy_objectives(unittest.TestCase):
+    """ Collection of Tests for the objectives module
+    """
+    def test_known_answers(self):
+        # Set up a dictionary of the keyword inputs, and what
+        # the results should be, for various combinations of input
+        known_answers = {}
+    
+
 class Test_nmpy(unittest.TestCase):
     """
     """
