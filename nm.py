@@ -109,8 +109,7 @@ def objectives(input_str=None,
                *args,
                ):
     """ Given number values, spit out the objectives in order.
-    TODO: Command Line Args
-    TODO: params.
+
         input_str
             use input_str or input_list, not both.
             if not None, use this as a list of inputs instead of asking for each
@@ -137,11 +136,14 @@ def objectives(input_str=None,
         *args
             Any strings passed will be added as objectives.
     """
+    # DONE: Command Line Args
+    # DONE: params.
     # 2018-02-21 Doesn't really work at all.
     # 2018-02-22 Sorting isn't working at all, I must be doing something wrong
     # 2018-02-22 Sorting is working!
     # 2018-02-22 put it on the clipboard automatically
     # 2018-02-22 I think entry should be a space separated string instead.
+    # 2018-03-08 TODO: Custom texts
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
