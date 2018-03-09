@@ -145,6 +145,7 @@ def objectives(input_str=None,
     # 2018-02-22 I think entry should be a space separated string instead.
     # 2018-03-08 TODO: Custom texts
     #            TODO: Separate objectives list data into an external file
+    # 2018-03-09 TODO: Rich formatting for the clipboard
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
@@ -181,11 +182,13 @@ def objectives(input_str=None,
             order.append((int(input_list[r]), obj))
     order = sorted(order, key=itemgetter(0), reverse=True)
 
-    # Add the budget line as the last item if a budget is given
+    # Add the budget line as the last item if a budget is given.
+    # This line doesn't actually get sorted, and shouldn't be
+    # left off no matter the rating, so giving the a rating of 999.
     if b:
         budget = b
     if budget:
-        order.append((len(order), "Allocate ${} per month toward attaining these objectives.".format(budget)))
+        order.append((999, "Allocate ${} per month toward attaining these objectives.".format(budget)))
 
     # copy the output to the clipboard, if the option is enabled
     if copy_output_to_clipboard:
