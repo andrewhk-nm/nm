@@ -4,6 +4,7 @@ work at Northwestern Mutual.
 Andrew Henning-Kolberg
 2016-02-14
 """
+# As functions get large, extract them to their own module.
 
 ## not mine
 import datetime
