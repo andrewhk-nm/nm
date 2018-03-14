@@ -97,6 +97,22 @@ def ci_pert(P, r, t):
     """
     return P * math.e ** (r * t)
 
+def copy_to_clipboard(to_clipboard):
+    """ Add whatever is passed to the clipboard.
+    """
+    rtk = Tk()
+    rtk.withdraw()
+    rtk.clipboard_clear()
+    rtk.clipboard_append(to_clipboard)
+    rtk.update() # now it stays on the clipboard after the window is closed
+    rtk.destroy()
+
+def c(to_clipboard):
+    """ Add whatever is passed to the clipboard.
+        (Short name version)
+    """
+    copy_to_clipboard(to_clipboard)
+
 def objectives(input_str=None,
                input_str_sep=' ',
                input_list=None,
