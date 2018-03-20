@@ -121,7 +121,7 @@ def copy_to_clipboard(to_clipboard):
 
 def c(to_clipboard):
     """ Add whatever is passed to the clipboard.
-        (Short name version)
+        (Short name version of copy_to_clipboard)
     """
     copy_to_clipboard(to_clipboard)
 
