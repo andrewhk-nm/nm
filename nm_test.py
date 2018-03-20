@@ -9,6 +9,20 @@ import unittest
 import nm
 from collections import namedtuple
 
+class Test_nmpy_pension_est(unittest.TestCase):
+    """ Tests for the pension estimator function
+    """
+    def test_known_answers(self):
+        # Ballpark = Top Earnings Years * # of years of service * 0.011
+        # creating some manually calculated results.
+        # Probably need to watch for floating point issues.
+        known_answers = {(35000, 10): 3850,
+                         (100000, 35): 38500,
+                         (63000, 9): 6237,
+                         }
+        for k in known_answers:
+            self.assertEqual(nm.pension_est(*k), known_answers[k])
+
 class Test_nmpy_objectives(unittest.TestCase):
     """ Collection of Tests for the objectives module
     """

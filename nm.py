@@ -35,7 +35,10 @@ import nm_netx_cob
 def pension_est(top_salary, years_of_service):
     """ Returns an estimated Pension amount based on the formula
         Ballpark = Top Earnings Years * # of years of service * 0.011
+
+        Uses floats
     """
+    # Probably need to watch for floating point issues.
     return top_salary * years_of_service * 0.011
 
 
