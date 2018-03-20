@@ -30,6 +30,15 @@ except (NameError, ModuleNotFoundError) as error:
 import nm_netx_cob
 # /mine
 
+### Done with imports. That's super messy.
+
+def pension_est(top_salary, years_of_service):
+    """ Returns an estimated Pension amount based on the formula
+        Ballpark = Top Earnings Years * # of years of service * 0.011
+    """
+    return top_salary * years_of_service * 0.011
+
+
 def ages(*birthyears):
     """ Takes a comma separated list of birthyears and returns their
         ages.
