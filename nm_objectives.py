@@ -1,3 +1,6 @@
+from tkinter import Tk
+from operator import itemgetter
+
 def objectives(input_str=None,
                input_str_sep=' ',
                input_list=None,
