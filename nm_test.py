@@ -23,7 +23,7 @@ class Test_nmpy_pension_est(unittest.TestCase):
         for k in known_answers:
             self.assertEqual(nm.pension_est(*k), known_answers[k])
 
-class Test_nmpy_objectives(unittest.TestCase):
+class Test_nm_objectives(unittest.TestCase):
     """ Collection of Tests for the objectives module
     """
     def test_known_answers(self):
