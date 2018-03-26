@@ -52,7 +52,7 @@ def ages(*birthyears):
     return years
     
 
-def weeks_in_year(year):
+def _weeks_in_year(year):
     """ Given a year, returns the number of weeks per the iso calendar.
     Will always return 52 or 53
     """
@@ -64,36 +64,43 @@ def weeks_in_year(year):
 
     return max([datetime.datetime.isocalendar(datetime.datetime(year, 12, x))[1] for x in range(31 - 7, 32)])
 
-def per_week(goal, have, ):
+def per_week(goal, have):
     """
     Given a Goal of 'goal' units and a current 'have' amount,
     return the average weekly production needed to meet that goal by the
     end of the year, rounded to two decimal places.
+
+    Adds an adjustment for the partial, current week, depending on the day
+    module is run:
+    Mon = 4 days
+    Tue = 3 days
+    Wed = 2 days
+    Thu = 1 day
+    Fri = 0 days
     """
     # DONE: 53 week years
     # DONE: what value is returned during a partial week?
-    # TODO: This appears affected by the time of the week the calculation
+    # DONE: This appears affected by the time of the week the calculation
     #       is done. It assumes it's the end of the current week.
     #       I should probably add a flag to say how much of the current
     #       week is left to work into the calcuation.
     current_year = datetime.datetime.now().year
-    weeks_in_current_year = weeks_in_year(current_year)
+    weeks_in_current_year = _weeks_in_year(current_year)
 
-    # I'm supposed to be developing in the dev branch. not master.
-    # Adjust for the current, partial week
+    # Adjust for the current, partial week.
     today = datetime.datetime.isocalendar(datetime.datetime.now())[2]
 
     # Monday = 1 in datetime, and it's a 5 day week, so add that many
-    #   days worth of goal amount to the number
-    fraction = (6 - today) / 5
-    
+    #   days worth of goal amount to the number.
+    #   I use (5 - today) because I'm assuming we shouldn't count the meeting day
+    #   to err on the side of conservativeness.
+    fraction = (5 - today) / 5
+
+    # Calculate the result, 
     result = round((goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
-        datetime.datetime.now())[1]), 2)
+        datetime.datetime.now())[1] + fraction), 2)
 
-    # This line is wrong. I only need the additional days worth.
-    result_plus_adjustment = result + result * fraction
-
-    return (result, result_plus_adjustment)
+    return result
 
 def ci(P, r, n, t):
     """ "A = P(1 + r/n)**(nt)"

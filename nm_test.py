@@ -67,27 +67,14 @@ class Test_nm_objectives(unittest.TestCase):
     
 
 class Test_nmpy(unittest.TestCase):
+    """ Collection of tests for the nm.py functions
     """
-    """
-    def test_Test(self):
-        self.assertTrue(True)
-
-##    def test_per_week_known_answers(self):
-##        self.assertTrue(False, 'Test not implemented correctly.')
-##
-##        Tpw = namedtuple('Tpw', ['goal', 'have', 'result'])
-##
-##        # This answer is dependant on the current week of the year...
-##        known_answers = {Tpw(300000, 1600, 6631.111111111111),
-##                         }
-##        for ans in known_answers:
-##            self.assertEqual(nm.per_week(ans.goal, ans.have), ans.result)
-
     def test_weeks_in_year(self):
         known_answers = {2018: 52,
                          2019: 52,
                          2020: 53,
                          }
+
 
 if __name__ == '__main__':
     unittest.main()
