@@ -64,16 +64,25 @@ def weeks_in_year(year):
 
     return max([datetime.datetime.isocalendar(datetime.datetime(year, 12, x))[1] for x in range(31 - 7, 32)])
 
-def per_week(goal, have):
+def per_week(goal, have, ):
     """
     Given a Goal of 'goal' units and a current 'have' amount,
     return the average weekly production needed to meet that goal by the
     end of the year, rounded to two decimal places.
     """
-    #DONE: 53 week years
-    #DONE: what value is returned during a partial week?
+    # DONE: 53 week years
+    # DONE: what value is returned during a partial week?
+    # TODO: This appears affected by the time of the week the calculation
+    #       is done. It assumes it's the end of the current week.
+    #       I should probably add a flag to say how much of the current
+    #       week is left to work into the calcuation.
     current_year = datetime.datetime.now().year
     weeks_in_current_year = weeks_in_year(current_year)
+
+##  I'm supposed to be developing in the dev branch. not master.
+##    # Adjust for the current, partial week
+##    today = datetime.datetime.isocalendar(datetime.datetime.now())[2]
+##    
     
     return round((goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
         datetime.datetime.now())[1]), 2)

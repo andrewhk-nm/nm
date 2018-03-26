@@ -51,6 +51,9 @@ def objectives(input_str=None,
     # 2018-03-08 TODO: Custom texts
     #            TODO: Separate objectives list data into an external file
     # 2018-03-09 TODO: Rich formatting for the clipboard
+    # 2018-03-23 TODO: Round the budget number to a whole dollar amount
+    #                  (the input supported math, so $500/12mo should be int
+    #            TODO: Make the output format better when pasting into word.
     objectives = ["Funding your children's education.",
                   "Funding a comfortable retirement.",
                   "Providing for your family in the event of death.",
