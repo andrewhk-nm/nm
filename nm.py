@@ -79,11 +79,6 @@ def per_week(goal, have, ):
     current_year = datetime.datetime.now().year
     weeks_in_current_year = weeks_in_year(current_year)
 
-##  I'm supposed to be developing in the dev branch. not master.
-##    # Adjust for the current, partial week
-##    today = datetime.datetime.isocalendar(datetime.datetime.now())[2]
-##    
-    
     return round((goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
         datetime.datetime.now())[1]), 2)
 
