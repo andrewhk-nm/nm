@@ -9,6 +9,7 @@ translate it. Probably in a dictionary structure.
 #       json sounds right for that.
 #       the xls file that gets spit out of NetX actually looks like an html/xml file.
 #           I'm going to try the xml package instead of xlrd
+#       etree complains that the file isn't well formed. It indicates line 1column 198, which ends with 'x:str'
 
 import json
 import xlrd
