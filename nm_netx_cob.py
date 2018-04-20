@@ -14,27 +14,37 @@ translate it. Probably in a dictionary structure.
 import json
 import xlrd
 import xml.etree.ElementTree as etree
+from html.parser import HTMLParser
 
-def read_cob_xml(filename=None):
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print("Encountered a start tag:", tag)
+
+    def handle_endtag(self, tag):
+        print("Encountered an end tag :", tag)
+
+    def handle_data(self, data):
+        print("Encountered some data  :", data) 
+
+def read_cob_hmtl(filename=None):
     """ Open filename (or prompt for one) and convert the NetX text into emailable text.
     """
     if not filename:
-        filename = input('Please enter the full path and filename for the Client Onboarding Field Review xls/xml sheet.\n')
-
-    tree = etree.parse(filename)
-    root = tree.getroot()
-    print(root)
+        filename = input('Please enter the full path and filename for the Client Onboarding Field Review xls/xml/html sheet.\n')
     
-
-def read_cob_xl(filename=None):
-    """ Open filename (or prompt for one) and convert the NetX text into emailable text.
+def read_cob_file(filename=None):
+    """ Open filename (or prompt for one) and return a string of the file contents.
     """
     if not filename:
-        filename = input('Please enter the full path and filename for the Client Onboarding Field Review xls sheet.\n')
+        filename = input('Please enter the full path and filename for the Client Onboarding Field Review xls/xml/html sheet.\n')
 
-    workbook = xlrd.open_workbook(filename=filename)
-    worksheet = workbook.sheets()
-    print('worksheet={}'.format(worksheet))
+    with open(filename, encoding='utf-8') as a_file:
+        whole_file = ''
+        for a_line in a_file:
+            whole_file += a_line
+        return whole_file
+
+
 
         
 
@@ -84,4 +94,6 @@ if __name__ == '__main__':
     #decoded_json = decodejson()
     #print(decoded_json)
     #read_cob_xl(r'C:\Users\perm7158\Documents\GitHub\nm\COBFieldReview-NS1394810 (not a real account, Roth IRA).xls')
-    read_cob_xml(r'C:\Users\perm7158\Documents\GitHub\nm\COB.xls.html')
+    #read_cob_xml(r'C:\Users\perm7158\Documents\GitHub\nm\COB.xls.html')
+    parser = MyHTMLParser()
+    parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\GitHub\nm\COB.xls.html'))
