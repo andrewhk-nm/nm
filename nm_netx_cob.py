@@ -35,6 +35,7 @@ class MyHTMLParser(HTMLParser):
     """ This class handles the parsing of the HTML COB contents
     """
     fields = dict()
+    pretty_print = list()
     
     def handle_starttag(self, tag, attrs):
         #print("Encountered a start tag:", tag)
@@ -68,7 +69,9 @@ class MyHTMLParser(HTMLParser):
             self.fields[data] = replacement_data
         
         #print("With Replacement       :", replacement_data)
-        print(replacement_data)
+        # add the replacement data to a list for later printing
+        self.pretty_print.append(replacement_data)
+        #print(replacement_data)
 
 class Cob2Human():
     """ Builds a dictionary to replace the gross COB text with human readable requests.
@@ -128,8 +131,13 @@ if __name__ == '__main__':
     parser = MyHTMLParser()
     parser.fields = cob2human.fields
     #parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\Repos\Python\nm\COB.xls.html'))
+    # Parse the list into Pretty Print format
     parser.feed(read_cob_file(filename))
     # Write the updated list to file
     writejson(parser.fields)
+    # Print the list
+    input('Parsing and conversions complete. Press <ENTER> to print the list.')
+    for item in parser.pretty_print:
+        print(item)
     # Pause before quitting
-    input('Done. <enter> to continue')
+    input('\nDone Pretty Printing. <ENTER> to exit.')
