@@ -41,8 +41,9 @@ class MyHTMLParser(HTMLParser):
         try:
             replacement_data = self.fields[data]
         except(KeyError):
-            replacement_data = input('"{}" does not have a replacement set.\n\nHow would you like this field to read instead?' .format(data))
-
+            replacement_data = input('"{}" does not have a replacement set.\n\nHow would you like this field to read instead? '.format(data))
+            self.fields[data] = replacement_data
+        
         print("With Replacement       :", replacement_data)
 
 class Cob2Human():
@@ -78,10 +79,6 @@ def read_cob_file(filename=None):
 
 
         
-
-
-
-
 def encodejson():
     some_fields = {
         'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - BUSINESS TYPE IS MANDATORY': '',
@@ -122,5 +119,7 @@ if __name__ == '__main__':
     print(cob2human.fields)
     parser = MyHTMLParser()
     parser.fields = cob2human.fields
-    parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\GitHub\nm\COB.xls.html'))
+    parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\Repos\Python\nm\COB.xls.html'))
+    # Write the updated list to file
+    writejson(parser.fields)
     
