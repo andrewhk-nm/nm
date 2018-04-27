@@ -115,8 +115,8 @@ def writejson(fields, filename='nm_netx_cob_data/nm_netx_cob.txt'):
         a_file.write(json.dumps(fields))
 
 if __name__ == '__main__':
+    # Create the cob2human object. this reads the fields from the replacement definition file into a dictionary.
     cob2human = Cob2Human()
-    print(cob2human.fields)
     parser = MyHTMLParser()
     parser.fields = cob2human.fields
     parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\Repos\Python\nm\COB.xls.html'))
