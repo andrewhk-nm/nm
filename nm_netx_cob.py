@@ -31,6 +31,8 @@ import json
 from html.parser import HTMLParser
 
 class MyHTMLParser(HTMLParser):
+    """ This class handles the parsing of the HTML COB contents
+    """
     fields = dict()
     
     def handle_starttag(self, tag, attrs):
@@ -42,14 +44,30 @@ class MyHTMLParser(HTMLParser):
         pass
 
     def handle_data(self, data):
-        print("Encountered some data  :", data)
+        """ As the HTML parser encounters data, handle it appropriately
+        """
+        #print("Encountered some data  :", data)
+
+        # Handle exceptional data
+        # "COB Field Review - #########" contains the account number. I don't think I want this, even obscured...
+        if data[0:16] == 'COB Field Review':
+            # Just exit and add nothing to the list.
+            return
+        # Skip blanks
+        if data.strip() == '':
+            # Just exit and add nothing to the list.
+            return
+
+        # Try getting the replacement field from the list.
+        # If it doesn't exist, prompt for new replacement text.
         try:
             replacement_data = self.fields[data]
         except(KeyError):
-            replacement_data = input('"{}" does not have a replacement set.\n\nHow would you like this field to read instead? '.format(data))
+            replacement_data = input('\n"{}" does not have a replacement set.\n\nHow would you like this field to read instead? '.format(data))
             self.fields[data] = replacement_data
         
-        print("With Replacement       :", replacement_data)
+        #print("With Replacement       :", replacement_data)
+        print(replacement_data)
 
 class Cob2Human():
     """ Builds a dictionary to replace the gross COB text with human readable requests.
@@ -57,7 +75,10 @@ class Cob2Human():
 
     fields = dict()
 
-    def decodejson(self, filename='nm_netx_cob_data/nm_netx_cob.txt'):
+    def _decodejson(self, filename='nm_netx_cob_data/nm_netx_cob.txt'):
+        """ Read from the external replacement definitions file, and
+            bring it into the local variable.
+        """
         #print(filename)
         try:
             # I don't think the rest of the code should be in the try block...
@@ -71,7 +92,7 @@ class Cob2Human():
     
     def __init__(self):
         # Import the current json list of replacements, if it exists
-        self.fields = self.decodejson()
+        self.fields = self._decodejson()
         #print(self.fields)
         
   
@@ -86,44 +107,10 @@ def read_cob_file(filename=None):
             whole_file += a_line
         return whole_file
 
-    
-
-
-
-
-        
-##def encodejson():
-##    some_fields = {
-##        'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - BUSINESS TYPE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - ADDITIONAL EMPLOYMENT INFO - EMPLOYER ADDRESS - ADDRESS LINE 1 IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - ADDITIONAL EMPLOYMENT INFO - EMPLOYER ADDRESS - CITY IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - ADDITIONAL EMPLOYMENT INFO - EMPLOYER ADDRESS - STATE / PROVINCE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - EMPLOYMENT INFO - ADDITIONAL EMPLOYMENT INFO - EMPLOYER ADDRESS - ZIP / POSTAL CODE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - GENERAL INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - INVESTMENT KNOWLEDGE AND EXPERIENCE - INVESTMENT KNOWLEDGE - INVESTMENT KNOWLEDGE IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - BROKER-DEALER AFFILIATIONS - RELATED TO AN EMPLOYEE OF THIS BROKER-DEALER? IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - BROKER-DEALER AFFILIATIONS - RELATED TO AN EMPLOYEE OF ANOTHER BROKER-DEALER? IS MANDATORY': '',
-##        'PRIMARY ACCOUNT HOLDER - BROKER-DEALER AFFILIATIONS - MAINTAINING OTHER BROKERAGE ACCOUNTS IS MANDATORY': '',
-##        'PRIMARY BENEFICIARY 1 - NAME DETAILS - RELATIONSHIP IS MANDATORY': '',
-##        'PRIMARY BENEFICIARY 1 - NAME DETAILS - FIRST NAME IS MANDATORY': '',
-##        'PRIMARY BENEFICIARY 1 - NAME DETAILS - LAST NAME IS MANDATORY': '',
-##        'PRIMARY BENEFICIARY 1 - DATE OF BIRTH IS MANDATORY': '',
-##        'PRIMARY BENEFICIARY 1 - GENDER IS MANDATORY': '',
-##        }
-##    writejson(some_fields)
 
 def writejson(fields, filename='nm_netx_cob_data/nm_netx_cob.txt'):
+    """ Write the replacement text to file for reuse next time.
+    """
     with open(filename, encoding='utf-8', mode='w') as a_file:
         a_file.write(json.dumps(fields))
 
