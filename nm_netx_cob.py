@@ -29,6 +29,7 @@ import json
 ##import xlrd
 ##import xml.etree.ElementTree as etree
 from html.parser import HTMLParser
+import sys
 
 class MyHTMLParser(HTMLParser):
     """ This class handles the parsing of the HTML COB contents
@@ -115,11 +116,20 @@ def writejson(fields, filename='nm_netx_cob_data/nm_netx_cob.txt'):
         a_file.write(json.dumps(fields))
 
 if __name__ == '__main__':
+    # Get the args, if any were passed
+    # args = sys.argv[1]
+    filename = sys.argv[1]
+    
+    #print('args={}'.format(args))
+    #input('<enter> to continue')
+    
     # Create the cob2human object. this reads the fields from the replacement definition file into a dictionary.
     cob2human = Cob2Human()
     parser = MyHTMLParser()
     parser.fields = cob2human.fields
-    parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\Repos\Python\nm\COB.xls.html'))
+    #parser.feed(read_cob_file(r'C:\Users\perm7158\Documents\Repos\Python\nm\COB.xls.html'))
+    parser.feed(read_cob_file(filename))
     # Write the updated list to file
     writejson(parser.fields)
-    
+    # Pause before quitting
+    input('Done. <enter> to continue')
