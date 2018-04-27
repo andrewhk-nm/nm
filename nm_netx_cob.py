@@ -20,6 +20,8 @@ translate it. Probably in a dictionary structure.
 # TODO: 2018-04-27 9.57a
 #       Run on a file from the command line/right click > Send To
 #       Clean up the interface.
+#		Don't try to save Account Numbers
+#		Perhaps some sort of way to put the person's name in the text? I don't want to start there though.
 
 
 
