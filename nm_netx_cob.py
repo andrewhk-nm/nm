@@ -17,6 +17,9 @@ translate it. Probably in a dictionary structure.
 #       TODO: Save the new verbiage.
 #       TODO: Make sure the format makes sense. I have two classes right now, is that the right amount?
 #               Or should there be just one? Or more?
+# TODO: 2018-04-27 9.57a
+#       Run on a file from the command line/right click > Send To
+#       Clean up the interface.
 
 
 
