@@ -22,7 +22,7 @@ translate it. Probably in a dictionary structure.
 #       Clean up the interface.
 #		Don't try to save Account Numbers
 #		Perhaps some sort of way to put the person's name in the text? I don't want to start there though.
-
+# Started using "Issues" on GitHub.
 
 
 import json
