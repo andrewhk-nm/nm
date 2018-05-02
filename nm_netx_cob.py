@@ -27,6 +27,7 @@ translate it. Probably in a dictionary structure.
 #       Add a key, so like {"Ugly COB Text 1": 100, "Ugly COB Text 2": 101}
 #       Then a separate replacement {100: "Pretty COB Text 1", 101: "Pretty COB Text 2"}
 #       Or just a utility to edit them. Or find-replace in Notepad++
+# Started using "Issues" on GitHub.
 
 
 import json
