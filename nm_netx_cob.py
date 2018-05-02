@@ -35,6 +35,8 @@ import json
 from html.parser import HTMLParser
 import sys
 
+COB_DEFINITIONS_PATHFILENAME = 'cob_definitions/cob_definitions.txt'
+
 class MyHTMLParser(HTMLParser):
     """ This class handles the parsing of the HTML COB contents
     """
@@ -83,7 +85,7 @@ class Cob2Human():
 
     fields = dict()
 
-    def _decodejson(self, filename='nm_netx_cob_data/nm_netx_cob.txt'):
+    def _decodejson(self, filename=COB_DEFINITIONS_PATHFILENAME):
         """ Read from the external replacement definitions file, and
             bring it into the local variable.
         """
@@ -116,7 +118,7 @@ def read_cob_file(filename=None):
         return whole_file
 
 
-def writejson(fields, filename='nm_netx_cob_data/nm_netx_cob.txt'):
+def writejson(fields, filename=COB_DEFINITIONS_PATHFILENAME):
     """ Write the replacement text to file for reuse next time.
     """
     with open(filename, encoding='utf-8', mode='w') as a_file:
