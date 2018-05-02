@@ -22,7 +22,11 @@ translate it. Probably in a dictionary structure.
 #       Clean up the interface.
 #		Don't try to save Account Numbers
 #		Perhaps some sort of way to put the person's name in the text? I don't want to start there though.
-
+# TODO: 2018-05-02 10.40a
+#       Perhaps change the dictionary structure for easier editing.
+#       Add a key, so like {"Ugly COB Text 1": 100, "Ugly COB Text 2": 101}
+#       Then a separate replacement {100: "Pretty COB Text 1", 101: "Pretty COB Text 2"}
+#       Or just a utility to edit them. Or find-replace in Notepad++
 
 
 import json
