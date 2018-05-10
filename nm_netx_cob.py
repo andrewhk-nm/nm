@@ -28,6 +28,7 @@ translate it. Probably in a dictionary structure.
 #       Then a separate replacement {100: "Pretty COB Text 1", 101: "Pretty COB Text 2"}
 #       Or just a utility to edit them. Or find-replace in Notepad++
 # Started using "Issues" on GitHub.
+#       https://github.com/andrewhk-nm/nm/issues
 
 
 import json
@@ -43,6 +44,8 @@ class MyHTMLParser(HTMLParser):
     """
     fields = dict()
     pretty_print = list()
+    acct_holder_name_primary = 'Primary Account Holder'
+    acct_holder_name_secondary = 'Secondary Account Holder'
     
     def handle_starttag(self, tag, attrs):
         #print("Encountered a start tag:", tag)
