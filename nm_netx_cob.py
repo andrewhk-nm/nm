@@ -131,7 +131,11 @@ def writejson(fields, filename=COB_DEFINITIONS_PATHFILENAME):
 if __name__ == '__main__':
     # Get the args, if any were passed
     # args = sys.argv[1]
-    filename = sys.argv[1]
+    try:
+        filename = sys.argv[1]
+    except(IndexError):
+        # No argument was passed. Ask for a path.
+        filename = input('Please enter the path and filename to parse: ')
     
     #print('args={}'.format(args))
     #input('<enter> to continue')
@@ -146,7 +150,9 @@ if __name__ == '__main__':
     # Write the updated list to file
     writejson(parser.fields)
     # Print the list
-    input('Parsing and conversions complete. Press <ENTER> to print the list.')
+    r = ''
+    while not 'y' in r:
+        r = input('Parsing and conversions complete. Print now? [yn] ')
     for item in parser.pretty_print:
         print(item)
     # Pause before quitting
