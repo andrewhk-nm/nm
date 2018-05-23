@@ -39,13 +39,15 @@ def pension_est(top_salary, years_of_service):
         Uses floats
     """
     # Probably need to watch for floating point issues.
+    # TDD: "class Test_nmpy_pension_est(unittest.TestCase):"
     return top_salary * years_of_service * 0.011
 
 
 def ages(*birthyears):
     """ Takes a comma separated list of birthyears and returns their
-        ages.
+        ages. Does not take into account birth month or day.
     """
+    # TDD: "class Test_nmpy_ages(unittest.TestCase):"
     years = list()
     for year in birthyears:
         years.append(datetime.datetime.now().year - year)

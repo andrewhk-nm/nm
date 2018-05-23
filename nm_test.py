@@ -8,6 +8,19 @@ Andrew Henning-Kolberg
 import unittest
 import nm
 from collections import namedtuple
+import datetime
+
+class Test_nmpy_ages(unittest.TestCase):
+    """ Tests for the ages estimator function
+    """
+    def test_known_answers(self):
+        # The dict key is a tuple so I can test the multiple years
+        known_answers = {(2000,): [datetime.datetime.now().year - 2000],
+                         (1900,): [datetime.datetime.now().year - 1900],
+                         (1998, 1990): [datetime.datetime.now().year - 1998, datetime.datetime.now().year - 1990],
+                         }
+        for k in known_answers:
+            self.assertListEqual(nm.ages(*k), known_answers[k])
 
 class Test_nmpy_pension_est(unittest.TestCase):
     """ Tests for the pension estimator function
