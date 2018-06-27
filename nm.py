@@ -68,7 +68,7 @@ def per_week(goal, have):
     """
     Given a Goal of 'goal' units and a current 'have' amount,
     return the average weekly production needed to meet that goal by the
-    end of the year, rounded to two decimal places.
+    end of the year. Does not round the answer.
 
     Adds an adjustment for the partial, current week, depending on the day
     module is run:
@@ -97,8 +97,8 @@ def per_week(goal, have):
     fraction = (5 - today) / 5
 
     # Calculate the result, 
-    result = round((goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
-        datetime.datetime.now())[1] + fraction), 2)
+    result = (goal - have) / (weeks_in_current_year - datetime.datetime.isocalendar(
+        datetime.datetime.now())[1] + fraction)
 
     return result
 
